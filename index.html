@@ -204,7 +204,7 @@
           2. Tap the address bar → paste the ESPN script below → tap Go<br>
           3. Data syncs here automatically ✓<br><br>
           <strong style="color:var(--text)">KenPom sync:</strong><br>
-          Same process on <code style="color:var(--blue)">kenpom.com</code> while logged in<br><br>
+          Same process on <code style="color:var(--blue)">kenpom&#46;com</code> while logged in<br><br>
           <div style="background:var(--surface);border:1px solid var(--border2);border-radius:4px;padding:8px;margin-top:4px">
             <div style="font-size:10px;color:var(--text3);margin-bottom:4px">Copy ESPN script → paste in Chrome address bar on espn.com</div>
             <div id="espnScriptMobile" style="font-size:9px;font-family:var(--mono);color:var(--text2);word-break:break-all;max-height:48px;overflow:hidden"></div>
@@ -216,7 +216,7 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div>
           <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px">📊 KenPom Four Factors</div>
-          <div style="font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:10px">Generates a console script. Paste it in your kenpom.com tab → 365 teams sync here instantly. Run once per session.</div>
+          <div style="font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:10px">Generates a console script. Paste it in your KenPom tab → 365 teams sync here instantly. Run once per session.</div>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
             <button class="btn-sm primary" id="syncKenpomBtn" onclick="syncKenpom()">⟳ Sync KenPom</button>
             <button class="btn-sm" onclick="checkKenpomCache()">Check Cache</button>
@@ -352,8 +352,8 @@
       <div style="font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.6">Every weight change is logged with the MAE before and after, so post-mortem analysis can identify if a recent change caused regression.</div>
       <div id="weightChangelogContainer"><div style="font-size:11px;color:var(--text3)">No changes logged yet.</div></div>
       <div class="divider"></div>
-      <div class="card-title" style="margin-bottom:12px">Standalone Mode (outside claude.ai)</div>
-      <div style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:10px;line-height:1.7">API key stored in localStorage only — never transmitted except to api.anthropic.com.</div>
+      <div class="card-title" style="margin-bottom:12px">Standalone Mode (outside claude&#46;ai)</div>
+      <div style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:10px;line-height:1.7">API key stored in localStorage only — never transmitted except to the Anthropic API endpoint.</div>
       <div class="config-row">
         <span class="config-label">Anthropic API key</span>
         <input type="password" class="config-input" id="apiKey" placeholder="sk-ant-..." autocomplete="off">
