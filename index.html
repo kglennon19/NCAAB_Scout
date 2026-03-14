@@ -192,27 +192,8 @@
     <div class="card" style="margin-bottom:12px">
       <div class="card-header">
         <span class="card-title">Data Sources</span>
-        <span style="font-size:10px;font-family:var(--mono);color:var(--text3)" id="mobileHint"></span>
       </div>
-      <!-- Mobile: sync instructions (hidden on desktop) -->
-      <div class="mobile-sync-banner" id="mobileSyncBanner">
-        📱 <strong>Mobile sync:</strong> F12 console isn't available on mobile, but you can paste scripts directly into Chrome's address bar.
-        <button onclick="document.getElementById('mobileSyncInstructions').style.display='block';this.style.display='none'" style="background:none;border:none;color:var(--amber);text-decoration:underline;cursor:pointer;font-size:11px;padding:0">Show how ▾</button>
-        <div id="mobileSyncInstructions" style="display:none;margin-top:10px;line-height:1.9">
-          <strong style="color:var(--text)">ESPN sync:</strong><br>
-          1. Open <code style="color:var(--blue)">espn.com/mens-college-basketball/scoreboard</code> in Chrome<br>
-          2. Tap the address bar → paste the ESPN script below → tap Go<br>
-          3. Data syncs here automatically ✓<br><br>
-          <strong style="color:var(--text)">KenPom sync:</strong><br>
-          Same process on <code style="color:var(--blue)">kenpom&#46;com</code> while logged in<br><br>
-          <div style="background:var(--surface);border:1px solid var(--border2);border-radius:4px;padding:8px;margin-top:4px">
-            <div style="font-size:10px;color:var(--text3);margin-bottom:4px">Copy ESPN script → paste in Chrome address bar on espn.com</div>
-            <div id="espnScriptMobile" style="font-size:9px;font-family:var(--mono);color:var(--text2);word-break:break-all;max-height:48px;overflow:hidden"></div>
-            <button onclick="copyMobileScript('espn')" style="margin-top:6px;font-family:var(--sans);font-size:10px;font-weight:600;padding:4px 10px;border-radius:4px;border:1px solid var(--green);background:var(--green-dim);color:var(--green);cursor:pointer">Copy ESPN Script</button>
-            <button onclick="copyMobileScript('kenpom')" style="margin-top:6px;margin-left:6px;font-family:var(--sans);font-size:10px;font-weight:600;padding:4px 10px;border-radius:4px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer">Copy KenPom Script</button>
-          </div>
-        </div>
-      </div>
+      <!-- Mobile sync instructions injected by JS into console script boxes -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div>
           <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px">📊 KenPom Four Factors</div>
@@ -1985,35 +1966,12 @@ function handleInjectedData(event) {
 window.addEventListener('message', handleInjectedData);
 
 // ─── INIT ────────────────────────────────────────────────────────
-// Mobile copy helper for address-bar script paste
-function copyMobileScript(which) {
-  const script = which === 'espn' ? ESPN_SCRAPER : KENPOM_SCRAPER;
-  const full = 'javascript:' + encodeURIComponent(script);
-  navigator.clipboard.writeText(full).then(function() {
-    const btn = document.querySelector('[onclick="copyMobileScript(\'' + which + '\')"]');
-    if (btn) { const orig = btn.textContent; btn.textContent = '✓ Copied!'; setTimeout(function(){ btn.textContent = orig; }, 2000); }
-  }).catch(function() {
-    // Fallback for older Android
-    const ta = document.createElement('textarea');
-    ta.value = full; ta.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta);
-  });
-}
-
 (async()=>{
   try {
   // Detect mobile (Android/iOS) — drives banner visibility and hint text
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 640;
   const isAndroid = /Android/i.test(navigator.userAgent);
 
-  // Show mobile sync banner and populate script preview
-  const banner = document.getElementById('mobileSyncBanner');
-  if (banner) banner.style.display = isMobile ? 'block' : 'none';
-  const espnPreview = document.getElementById('espnScriptMobile');
-  if (espnPreview) espnPreview.textContent = 'javascript:' + encodeURIComponent(ESPN_SCRAPER).slice(0, 120) + '...';
-  const hint = document.getElementById('mobileHint');
-  if (hint) hint.textContent = isMobile ? (isAndroid ? 'Paste scripts in Chrome address bar' : 'Use F12 console') : 'Paste scripts in F12 console';
   addLog('Agent v3 initialized. KenPom four-factor model ready.', 'ok');
   const cfg = await loadConfig();
   addLog('EV threshold: ' + cfg.evThreshold + 'pts | Max plays: ' + cfg.maxPlays, 'info');
